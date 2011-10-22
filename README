@@ -1,0 +1,19 @@
+Code2slide is a lightweight tool for creating a syntax highlighted HTML slideshow from a text file.
+
+Below is an example of the format used for the text that is converted to a slide show:
+
+--------------------------------------------------
+
+**Slide title**
+
+* Bullet 1
+* Bullet 2
+** Sub bullet 1
+
+code:
+  private void Foo()
+  {
+    // ...
+  }
+
+--------------------------------------------------
