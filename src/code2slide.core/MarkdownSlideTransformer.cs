@@ -1,6 +1,7 @@
 ﻿using System;
-using code2slide.core.Extensions;
+using System.IO;
 using System.Linq;
+using code2slide.core.Extensions;
 
 namespace code2slide.core
 {
@@ -8,9 +9,20 @@ namespace code2slide.core
     {
         private readonly IMarkdownTransformer _markdownTransformer;
 
+        public MarkdownSlideTransformer() : this(new MarkdownTransformer())
+        {
+            
+        }
+
         public MarkdownSlideTransformer(IMarkdownTransformer markdownTransformer)
         {
             _markdownTransformer = markdownTransformer;
+        }
+
+        public HtmlSlideShow TransformFile(string path)
+        {
+            var fileContents = File.ReadAllText(path);
+            return Transform(fileContents);
         }
 
         public HtmlSlideShow Transform(string markdown)

@@ -1,15 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MarkdownSharp;
+using System.IO;
+using code2slide.core;
 
 namespace code2slide
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
+            if (args.Length < 1)
+            {
+                Console.WriteLine("usage: code2slide <filename>");
+            }
+
+            var transformer = new MarkdownSlideTransformer();
+            var slideShow = transformer.TransformFile(args[0]);
+
+            slideShow.WriteToDirectory(Directory.GetCurrentDirectory());
         }
     }
 }

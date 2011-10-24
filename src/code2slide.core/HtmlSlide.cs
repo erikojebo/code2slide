@@ -13,7 +13,7 @@ namespace code2slide.core
 
         public string ToHtml()
         {
-            throw new NotImplementedException();
+            return string.Format("<html><body>{0}</body></html>", Body);
         }
     }
 }
