@@ -13,9 +13,7 @@ namespace code2slide
                 Console.WriteLine("usage: code2slide <filename>");
             }
 
-            var transformer = new MarkdownSlideTransformer();
-            var slideShow = transformer.TransformFile(args[0]);
-
+            var slideShow = HtmlSlideShow.CreateFromMarkdownFile(args[0]);
             slideShow.WriteToDirectory(Directory.GetCurrentDirectory());
         }
     }

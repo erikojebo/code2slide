@@ -1,2 +1,2 @@
+* Visual Studio colors for C# highlighting
 * Template file
-* Slide file name: 01_Title_1.html
