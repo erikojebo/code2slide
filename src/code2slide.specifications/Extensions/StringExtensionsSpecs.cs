@@ -62,5 +62,13 @@ Part 3 row 1".SplitAtLine(x => x.StartsWith("==="));
                     "c"
                 }, lines);
         }
+
+        [Test]
+        public void StipWhitespace_removes_all_whitespace()
+        {
+            var original = "\nhere  is\r\nsome\t text\t\t";
+
+            Assert.AreEqual("hereissometext", original.StripWhitespace());
+        }
     }
 }

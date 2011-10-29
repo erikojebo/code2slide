@@ -54,5 +54,13 @@ namespace code2slide.core.Extensions
 
             return lines.ToArray();
         }
+
+        public static string StripWhitespace(this string s)
+        {
+            return s.Replace("\n", "")
+                .Replace("\r", "")
+                .Replace("\t", "")
+                .Replace(" ", "");
+        }
     }
 }
