@@ -31,18 +31,9 @@ namespace code2slide.core
             get { return Title.ToLower().Replace(" ", "_"); }
         }
 
-        public string ToHtml()
+        public string ToHtml(string template)
         {
-            var html = string.Format(
-                @"<html>
-    <head>
-        <link href=""prettify/prettify.css"" type=""text/css"" rel=""stylesheet"" />
-        <script type=""text/javascript"" src=""prettify/prettify.js""></script>
-    </head>
-    <body onload=""prettyPrint()"">
-        {0}
-    </body>
-</html>", Body);
+            var html = template.Replace("##CONTENT##", Body);
 
             return html.Replace("<code>", "<code class=\"prettyprint\">");
         }

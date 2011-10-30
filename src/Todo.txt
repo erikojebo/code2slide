@@ -1,2 +1,2 @@
-* Visual Studio colors for C# highlighting
-* Template file
+* Better command line parameter parsing
+- code2slide -markdown_file markdown.txt -template_file template.html -output_directory presentation/

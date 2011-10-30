@@ -46,6 +46,7 @@
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="IMarkdownTransformer.cs" />
+    <Compile Include="Io\FileSystem.cs" />
     <Compile Include="MarkdownTransformer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HtmlSlide.cs" />

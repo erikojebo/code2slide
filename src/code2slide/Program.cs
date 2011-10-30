@@ -10,11 +10,21 @@ namespace code2slide
         {
             if (args.Length < 1)
             {
-                Console.WriteLine("usage: code2slide <filename>");
+                Console.WriteLine(@"usage: code2slide <markdown_file> <template_file> <output_directory>");
             }
 
-            var slideShow = HtmlSlideShow.CreateFromMarkdownFile(args[0]);
-            slideShow.WriteToDirectory(Directory.GetCurrentDirectory());
+            var markdownFilePath = args[0];
+            var templateFilePath = args[1];
+            var directoryPath = args[2];
+
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+
+            var slideShow = HtmlSlideShow.CreateFromMarkdownFile(markdownFilePath);
+
+            slideShow.WriteToDirectory(directoryPath, templateFilePath);
         }
     }
 }

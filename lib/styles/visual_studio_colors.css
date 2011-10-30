@@ -1,0 +1,14 @@
+.com { color: #008000; }
+.str, .tag { color: #A31523; }
+.kwd, .atv { color: #0000FF; }
+.typ { color: #2B91B4; }
+.lit, .atn { color: #FF0000; }
+.pun, .pln { color: #000000; }
+.dec { color: purple; }
+
+body {
+  font-family: verdana;
+  margin-left: 75px;
+  margin-top: 50px;
+  font-size: 20px;
+}

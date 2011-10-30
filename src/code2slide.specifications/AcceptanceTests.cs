@@ -11,6 +11,7 @@ namespace code2slide.specifications
     {
         private string _markdownFilePath;
         private string _outputDirectory;
+        private string _templateFilePath;
         private const string Markdown = @"
 Title 1
 =======
@@ -32,13 +33,24 @@ Other text
 
 ";
 
+        private const string Template = @"
+<html>
+    <!-- this is the test template -->
+    <body>
+        ##CONTENT##
+    </body>
+</html>
+";
+
         [SetUp]
         public void SetUp()
         {
             _markdownFilePath = Path.GetTempFileName();
             _outputDirectory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            _templateFilePath = Path.GetTempFileName();
 
             File.WriteAllText(_markdownFilePath, Markdown);
+            File.WriteAllText(_templateFilePath, Template);
             Directory.CreateDirectory(_outputDirectory);
         }
 
@@ -47,36 +59,43 @@ Other text
         {
             var slideShow = HtmlSlideShow.CreateFromMarkdownFile(_markdownFilePath);
 
-            slideShow.WriteToDirectory(_outputDirectory);
+            slideShow.WriteToDirectory(_outputDirectory, _templateFilePath);
 
             var files = Directory.GetFiles(_outputDirectory);
 
             Assert.AreEqual(2, files.Length);
 
             AssertOutputFileContains("01_title_1.html", @"
-<body onload=""prettyPrint()"">
-    <h1>Title 1</h1>
+<html>
+    <!-- this is the test template -->
+    <body>
+        <h1>Title 1</h1>
 
-    <ul>
-    <li>Bullet 1</li>
-    <li>Bullet 2</li>
-    </ul>
+        <ul>
+        <li>Bullet 1</li>
+        <li>Bullet 2</li>
+        </ul>
 
-    <p>Text</p>
-</body>");
+        <p>Text</p>
+    </body>
+</html>");
 
             AssertOutputFileContains("02_the_second_title.html",
 @"
-<body onload=""prettyPrint()"">
-    <h1>The second title</h1>
+<html>
+    <!-- this is the test template -->
+    <body>
 
-    <p>Other text</p>
+        <h1>The second title</h1>
 
-    <pre><code class=""prettyprint"">
-        code
-        snippet
-    </code></pre>
-</body>");
+        <p>Other text</p>
+
+        <pre><code class=""prettyprint"">
+            code
+            snippet
+        </code></pre>
+    </body>
+</html>");
 
 
         }

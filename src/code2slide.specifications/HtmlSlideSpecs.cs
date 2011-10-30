@@ -1,5 +1,6 @@
 using code2slide.core;
 using NUnit.Framework;
+using code2slide.core.Extensions;
 
 namespace code2slide.specifications
 {
@@ -11,7 +12,19 @@ namespace code2slide.specifications
         {
             var slide = new HtmlSlide("<pre><code>code block</code></pre>");
 
-            Assert.That(slide.ToHtml(), Is.StringContaining("<pre><code class=\"prettyprint\">code block</code></pre>"));
+            Assert.That(slide.ToHtml("<html>##CONTENT##</html>"), 
+                Is.StringContaining("<pre><code class=\"prettyprint\">code block</code></pre>"));
+        }
+
+        [Test]
+        public void ToHtml_injects_html_into_template_at_marker()
+        {
+            var slide = new HtmlSlide("<p>slide html</p>");
+
+            var actual = slide.ToHtml("<html><div class=\"a_class\">##CONTENT##</div></html>").StripWhitespace();
+            var expected = "<html><div class=\"a_class\"><p>slide html</p></div></html>".StripWhitespace();
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]

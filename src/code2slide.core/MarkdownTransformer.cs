@@ -9,7 +9,7 @@ namespace code2slide.core
             var markdownSharpTransformer = new Markdown();
             
             markdownSharpTransformer.AutoHyperlink = true;
-            markdownSharpTransformer.AutoNewLines = true;
+            //markdownSharpTransformer.AutoNewLines = true;
 
             return markdownSharpTransformer.Transform(markdown);
         }
