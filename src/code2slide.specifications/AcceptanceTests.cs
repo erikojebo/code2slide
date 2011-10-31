@@ -58,8 +58,9 @@ Other text
         public void Slide_show_can_be_created_from_markdown_file_and_saved_to_directory()
         {
             var slideShow = HtmlSlideShow.CreateFromMarkdownFile(_markdownFilePath);
+            var template = SlideTemplate.CreateFromTemplatePath(_templateFilePath);
 
-            slideShow.WriteToDirectory(_outputDirectory, _templateFilePath);
+            slideShow.WriteToDirectory(_outputDirectory, template);
 
             var files = Directory.GetFiles(_outputDirectory);
 

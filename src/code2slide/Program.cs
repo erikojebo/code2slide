@@ -24,7 +24,11 @@ namespace code2slide
 
             var slideShow = HtmlSlideShow.CreateFromMarkdownFile(markdownFilePath);
 
-            slideShow.WriteToDirectory(directoryPath, templateFilePath);
+            slideShow.AddLinkedResource(new LinkedResourceDirectory("styles"));
+            slideShow.AddLinkedResource(new LinkedResourceDirectory("prettify"));
+
+            var template = SlideTemplate.CreateFromTemplatePath(templateFilePath);
+            slideShow.WriteToDirectory(directoryPath, template);
         }
     }
 }

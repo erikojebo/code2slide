@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using code2slide.core.Extensions;
-using code2slide.core.Io;
 
 namespace code2slide.core
 {
     public class HtmlSlideShow : IEnumerable<HtmlSlide>
     {
         private readonly List<HtmlSlide> _slides = new List<HtmlSlide>();
+        private readonly IList<LinkedResource> _linkedResources = new List<LinkedResource>();
 
         private HtmlSlideShow() {}
 
@@ -30,38 +28,32 @@ namespace code2slide.core
             return GetEnumerator();
         }
 
-        public void WriteToDirectory(string directoryPath, string templateFilePath)
+        public void WriteToDirectory(string directoryPath, SlideTemplate template)
         {
-            CopyLinkedFiles(directoryPath);
-            WriteSlides(directoryPath, templateFilePath);
+            CopyLinkedResources(directoryPath);
+            WriteSlides(directoryPath, template);
         }
 
-        private void CopyLinkedFiles(string directoryPath)
+        private void CopyLinkedResources(string directoryPath)
         {
-            var assemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
-            var prettifyDirectoryPath = Path.Combine(assemblyDirectory, "google-code-prettify");
-            var prettifyDestinationPath = Path.Combine(directoryPath, "prettify");
-            var stylesDirectoryPath = Path.Combine(assemblyDirectory, "styles");
-            var stylesDestinationPath = Path.Combine(directoryPath, "styles");
-
-            FileSystem.CopyDirectoryTree(prettifyDirectoryPath, prettifyDestinationPath);
-            FileSystem.CopyDirectoryTree(stylesDirectoryPath, stylesDestinationPath);
-        }
-
-        private void WriteSlides(string directoryPath, string templateFilePath)
-        {
-            for (int index = 0; index < _slides.Count; index++)
+            foreach (var linkedResource in _linkedResources)
             {
-                WriteSlide(index, directoryPath, templateFilePath);
+                linkedResource.CopyTo(directoryPath);
             }
         }
 
-        private void WriteSlide(int index, string directoryPath, string templateFilePath) {
+        private void WriteSlides(string directoryPath, SlideTemplate template)
+        {
+            for (int index = 0; index < _slides.Count; index++)
+            {
+                WriteSlide(index, directoryPath, template);
+            }
+        }
+
+        private void WriteSlide(int index, string directoryPath, SlideTemplate template)
+        {
             var htmlSlide = _slides[index];
             var path = Path.Combine(directoryPath, htmlSlide.GetFilenameFromIndex(index));
-
-            var template = File.ReadAllText(templateFilePath);
 
             var content = htmlSlide.ToHtml(template);
 
@@ -80,13 +72,18 @@ namespace code2slide.core
         {
             var markdownTransformer = new MarkdownTransformer();
             var htmlSlidesBodies = markdownSlides.Select(markdownTransformer.Transform);
-            var slides = htmlSlidesBodies.Select(x => new HtmlSlide(x));
+            var slides = htmlSlidesBodies.Select(HtmlSlide.CreateFromHtmlBody);
 
             var slideShow = new HtmlSlideShow();
 
             slideShow._slides.AddRange(slides);
 
             return slideShow;
+        }
+
+        public void AddLinkedResource(LinkedResource resource)
+        {
+            _linkedResources.Add(resource);
         }
     }
 }

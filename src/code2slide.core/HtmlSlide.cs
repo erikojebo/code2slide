@@ -4,10 +4,12 @@ namespace code2slide.core
 {
     public class HtmlSlide
     {
-        public HtmlSlide(string body)
+        public static HtmlSlide CreateFromHtmlBody(string htmlBody)
         {
-            Body = body;
+            return new HtmlSlide { Body = htmlBody};
         }
+
+        private HtmlSlide() {}
 
         public string Body { get; private set; }
 
@@ -31,11 +33,10 @@ namespace code2slide.core
             get { return Title.ToLower().Replace(" ", "_"); }
         }
 
-        public string ToHtml(string template)
+        public string ToHtml(SlideTemplate template)
         {
-            var html = template.Replace("##CONTENT##", Body);
-
-            return html.Replace("<code>", "<code class=\"prettyprint\">");
+            return template.CreateHtml(Body)
+                .Replace("<code>", "<code class=\"prettyprint\">");
         }
 
         public string GetFilenameFromIndex(int index)
