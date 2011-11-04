@@ -37,6 +37,8 @@ Other text
 <html>
     <!-- this is the test template -->
     <body>
+        <a href=""##PREVIOUS_FILE##"">##PREVIOUS_TITLE##</a>
+        <a href=""##NEXT_FILE##"">##NEXT_TITLE##</a>
         ##CONTENT##
     </body>
 </html>
@@ -70,6 +72,8 @@ Other text
 <html>
     <!-- this is the test template -->
     <body>
+        <a href=""""></a>
+        <a href=""02_the_second_title.html"">The second title</a>
         <h1>Title 1</h1>
 
         <ul>
@@ -86,6 +90,8 @@ Other text
 <html>
     <!-- this is the test template -->
     <body>
+        <a href=""01_title_1.html"">Title 1</a>
+        <a href=""""></a>
 
         <h1>The second title</h1>
 

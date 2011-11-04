@@ -66,7 +66,7 @@ namespace code2slide.specifications
         }
         
         [Test]
-        public void ToHtml_injects_file_name_of_previous_slide_at_NEXT_FILE_marker_if_not_first_slide()
+        public void ToHtml_injects_file_name_of_next_slide_at_NEXT_FILE_marker_if_not_first_slide()
         {
             var slide = HtmlSlide.CreateFromHtmlBody("");
 
@@ -83,6 +83,50 @@ namespace code2slide.specifications
             _templateContent.NextSlideFileName = "";
 
             var template = SlideTemplate.CreateFromHtml("before ##NEXT_FILE## after");
+
+            Assert.AreEqual("before  after", slide.ToHtml(template, _templateContent));
+        }
+
+        [Test]
+        public void ToHtml_injects_previous_slide_title_at_PREVIOUS_TITLE_marker_if_not_first_slide()
+        {
+            var slide = HtmlSlide.CreateFromHtmlBody("");
+
+            var template = SlideTemplate.CreateFromHtml("before ##PREVIOUS_TITLE## after");
+
+            Assert.AreEqual("before previous title after", slide.ToHtml(template, _templateContent));
+        }
+        
+        [Test]
+        public void ToHtml_injects_nothing_at_PREVIOUS_TITLE_marker_if_first_slide()
+        {
+            var slide = HtmlSlide.CreateFromHtmlBody("");
+
+            _templateContent.PreviousSlideTitle = "";
+
+            var template = SlideTemplate.CreateFromHtml("before ##PREVIOUS_TITLE## after");
+
+            Assert.AreEqual("before  after", slide.ToHtml(template, _templateContent));
+        }
+        
+        [Test]
+        public void ToHtml_injects_next_slide_title_at_NEXT_TITLE_marker_if_not_first_slide()
+        {
+            var slide = HtmlSlide.CreateFromHtmlBody("");
+
+            var template = SlideTemplate.CreateFromHtml("before ##NEXT_TITLE## after");
+
+            Assert.AreEqual("before next title after", slide.ToHtml(template, _templateContent));
+        }
+        
+        [Test]
+        public void ToHtml_injects_nothing_at_NEXT_TITLE_marker_if_first_slide()
+        {
+            var slide = HtmlSlide.CreateFromHtmlBody("");
+
+            _templateContent.NextSlideTitle = "";
+
+            var template = SlideTemplate.CreateFromHtml("before ##NEXT_TITLE## after");
 
             Assert.AreEqual("before  after", slide.ToHtml(template, _templateContent));
         }

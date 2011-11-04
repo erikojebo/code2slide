@@ -8,16 +8,16 @@
         <script type="text/javascript">
           $(document).ready(function(){
             $("body").keydown(function(event){
-          
+
               var leftArrow = '37';
               var upArrow = '38';
               var rightArrow = '39';
               var downArrow = '40';
 
-              if (event.keycode == rightArrow) {
-                window.open("http://www.google.com", "_self");
-              }
-
+              if (event.keyCode == rightArrow && "##NEXT_FILE##" != "") {
+                window.open("##NEXT_FILE##", "_self");
+              } else if (event.keyCode == leftArrow && "##PREVIOUS_FILE##" != "") {
+                window.open("##PREVIOUS_FILE##", "_self");
             });
           });
         </script>

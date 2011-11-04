@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -56,7 +55,20 @@ namespace code2slide.core
             var htmlSlide = _slides[index];
             var path = Path.Combine(directoryPath, htmlSlide.GetFilenameFromIndex(index));
 
-            var content = htmlSlide.ToHtml(template, new SlideTemplateContent());
+            var slideTemplateContent = new SlideTemplateContent();
+
+            if (index > 0)
+            {
+                slideTemplateContent.PreviousSlideFileName = _slides[index - 1].GetFilenameFromIndex(index - 1);
+                slideTemplateContent.PreviousSlideTitle = _slides[index - 1].Title;
+            }
+            if (index < _slides.Count - 1)
+            {
+                slideTemplateContent.NextSlideFileName = _slides[index + 1].GetFilenameFromIndex(index+1);
+                slideTemplateContent.NextSlideTitle = _slides[index + 1].Title;
+            }
+
+            var content = htmlSlide.ToHtml(template, slideTemplateContent);
 
             File.WriteAllText(path, content);
         }

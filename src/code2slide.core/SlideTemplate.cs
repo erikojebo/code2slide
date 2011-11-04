@@ -27,7 +27,9 @@ namespace code2slide.core
         {
             return TemplateContent.Replace("##CONTENT##", content.Content)
                 .Replace("##PREVIOUS_FILE##", content.PreviousSlideFileName)
-                .Replace("##NEXT_FILE##", content.NextSlideFileName);
+                .Replace("##NEXT_FILE##", content.NextSlideFileName)
+                .Replace("##PREVIOUS_TITLE##", content.PreviousSlideTitle)
+                .Replace("##NEXT_TITLE##", content.NextSlideTitle);
         }
 
         public static SlideTemplate CreateFromTemplatePath(string path)
