@@ -23,9 +23,11 @@ namespace code2slide.core
 
         public string Path { get; private set; }
 
-        public string CreateHtml(string content)
+        public string CreateHtml(SlideTemplateContent content)
         {
-            return TemplateContent.Replace("##CONTENT##", content);
+            return TemplateContent.Replace("##CONTENT##", content.Content)
+                .Replace("##PREVIOUS_FILE##", content.PreviousSlideFileName)
+                .Replace("##NEXT_FILE##", content.NextSlideFileName);
         }
 
         public static SlideTemplate CreateFromTemplatePath(string path)

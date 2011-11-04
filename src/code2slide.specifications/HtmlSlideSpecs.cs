@@ -7,26 +7,84 @@ namespace code2slide.specifications
     [TestFixture]
     public class HtmlSlideSpecs
     {
+        private SlideTemplateContent _templateContent;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _templateContent = new SlideTemplateContent
+                {
+                    PreviousSlideFileName = "previous file name",
+                    NextSlideFileName = "next file name",
+                    PreviousSlideTitle = "previous title",
+                    NextSlideTitle = "next title"
+                };
+        }
+
         [Test]
         public void Code_block_gets_prettyprint_css_class()
         {
             var template = SlideTemplate.CreateFromHtml("<html>##CONTENT##</html>");
             var slide = HtmlSlide.CreateFromHtmlBody("<pre><code>code block</code></pre>");
 
-            Assert.That(slide.ToHtml(template), 
+            Assert.That(slide.ToHtml(template, _templateContent), 
                 Is.StringContaining("<pre><code class=\"prettyprint\">code block</code></pre>"));
         }
 
         [Test]
-        public void ToHtml_injects_html_into_template_at_marker()
+        public void ToHtml_injects_html_body_into_template_at_CONTENT_marker()
         {
             var slide = HtmlSlide.CreateFromHtmlBody("<p>slide html</p>");
             var template = SlideTemplate.CreateFromHtml("<html><div class=\"a_class\">##CONTENT##</div></html>");
 
-            var actual = slide.ToHtml(template).StripWhitespace();
+            var actual = slide.ToHtml(template, _templateContent).StripWhitespace();
             var expected = "<html><div class=\"a_class\"><p>slide html</p></div></html>".StripWhitespace();
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void ToHtml_injects_file_name_of_previous_slide_at_PREVIOUS_FILE_marker_if_not_first_slide()
+        {
+            var slide = HtmlSlide.CreateFromHtmlBody("");
+
+            var template = SlideTemplate.CreateFromHtml("before ##PREVIOUS_FILE## after");
+
+            Assert.AreEqual("before previous file name after", slide.ToHtml(template, _templateContent));
+        }
+        
+        [Test]
+        public void ToHtml_injects_nothing_at_PREVIOUS_FILE_marker_if_first_slide()
+        {
+            var slide = HtmlSlide.CreateFromHtmlBody("");
+
+            _templateContent.PreviousSlideFileName = "";
+
+            var template = SlideTemplate.CreateFromHtml("before ##PREVIOUS_FILE## after");
+
+            Assert.AreEqual("before  after", slide.ToHtml(template, _templateContent));
+        }
+        
+        [Test]
+        public void ToHtml_injects_file_name_of_previous_slide_at_NEXT_FILE_marker_if_not_first_slide()
+        {
+            var slide = HtmlSlide.CreateFromHtmlBody("");
+
+            var template = SlideTemplate.CreateFromHtml("before ##NEXT_FILE## after");
+
+            Assert.AreEqual("before next file name after", slide.ToHtml(template, _templateContent));
+        }
+        
+        [Test]
+        public void ToHtml_injects_nothing_at_NEXT_FILE_marker_if_first_slide()
+        {
+            var slide = HtmlSlide.CreateFromHtmlBody("");
+
+            _templateContent.NextSlideFileName = "";
+
+            var template = SlideTemplate.CreateFromHtml("before ##NEXT_FILE## after");
+
+            Assert.AreEqual("before  after", slide.ToHtml(template, _templateContent));
         }
 
         [Test]

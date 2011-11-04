@@ -1,0 +1,8 @@
+* Add jQuery to template
+* Create github repository for gosu.commons
+* Create NuGet package for gosu.commons
+* Use gosu.commons for parsing console arguments
+* Add default values for template file, output path, etc
+* Left mouse button should move to next slide
+* Arrow left/right should move between slides
+* 'B' key should make the screen black

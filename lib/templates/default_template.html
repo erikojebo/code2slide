@@ -3,11 +3,29 @@
         <link href="prettify/prettify.css" type="text/css" rel="stylesheet" />
         <link href="styles/visual_studio_colors.css" type="text/css" rel="stylesheet" />
         <link href="styles/default.css" type="text/css" rel="stylesheet" />
+        <script src="jquery/jquery-1.7.js"></script>
         <script type="text/javascript" src="prettify/prettify.js"></script>
+        <script type="text/javascript">
+          $(document).ready(function(){
+            $("body").keydown(function(event){
+          
+              var leftArrow = '37';
+              var upArrow = '38';
+              var rightArrow = '39';
+              var downArrow = '40';
+
+              if (event.keycode == rightArrow) {
+                window.open("http://www.google.com", "_self");
+              }
+
+            });
+          });
+        </script>
     </head>
     <body onload="prettyPrint()">
-	    <!-- You can create any template you want. The only thing you have to do is to include the magic ##CONTENT## string
-             at the place where you want the actual slide HTML markup to be inserted -->
+	    <!-- You can create any template you want. The only thing you have to do is to include 
+             the magic content string, as shown below, at the place where you want the actual 
+             slide HTML markup to be inserted -->
         ##CONTENT##
     </body>
 </html>

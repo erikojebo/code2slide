@@ -33,9 +33,10 @@ namespace code2slide.core
             get { return Title.ToLower().Replace(" ", "_"); }
         }
 
-        public string ToHtml(SlideTemplate template)
+        public string ToHtml(SlideTemplate template, SlideTemplateContent templateContent)
         {
-            return template.CreateHtml(Body)
+            templateContent.Content = Body;
+            return template.CreateHtml(templateContent)
                 .Replace("<code>", "<code class=\"prettyprint\">");
         }
 

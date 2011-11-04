@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -55,7 +56,7 @@ namespace code2slide.core
             var htmlSlide = _slides[index];
             var path = Path.Combine(directoryPath, htmlSlide.GetFilenameFromIndex(index));
 
-            var content = htmlSlide.ToHtml(template);
+            var content = htmlSlide.ToHtml(template, new SlideTemplateContent());
 
             File.WriteAllText(path, content);
         }
@@ -84,6 +85,13 @@ namespace code2slide.core
         public void AddLinkedResource(LinkedResource resource)
         {
             _linkedResources.Add(resource);
+        }
+
+        public static HtmlSlideShow CreateFromSlides(params HtmlSlide[] slides)
+        {
+            var slideShow = new HtmlSlideShow();
+            slideShow._slides.AddRange(slides);
+            return slideShow;
         }
     }
 }

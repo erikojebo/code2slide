@@ -54,6 +54,7 @@
     <Compile Include="HtmlSlide.cs" />
     <Compile Include="HtmlSlideShow.cs" />
     <Compile Include="SlideTemplate.cs" />
+    <Compile Include="SlideTemplateContent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
