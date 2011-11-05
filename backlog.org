@@ -1,8 +1,11 @@
-* Add jQuery to template
-* Create github repository for gosu.commons
-* Create NuGet package for gosu.commons
-* Use gosu.commons for parsing console arguments
-* Add default values for template file, output path, etc
-* Left mouse button should move to next slide
-* Arrow left/right should move between slides
-* 'B' key should make the screen black
+* DONE Add jQuery to template
+* DONE Create github repository for gosu.commons
+* DONE Create NuGet package for gosu.commons
+* DONE Use gosu.commons for parsing console arguments
+* DONE Add default values for template file, output path, etc
+* DONE Arrow left/right should move between slides
+* DONE 'B' key should make the screen black
+* TODO Create rake task for packing up the application and its resources into a zip file for deployment
+* TODO Make sure the default paths point to the files in the folder of the executable and not the working dir
+
+* (Left mouse button should move to next slide)
