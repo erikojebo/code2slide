@@ -14,3 +14,10 @@ def solution
 
   @solution
 end
+
+task :default => [:clean, :build_release, :copy_libs, :nunit]
+
+task :slides => [:default] do
+  dir = "src/code2slide/bin/Release"
+  system "#{dir}/code2slide.exe -markdown #{dir}/markdown.md -template #{dir}/default_template.html -outdir #{dir}/presentation"
+end
