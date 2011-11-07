@@ -1,0 +1,16 @@
+require 'lib/gosu_albacore'
+
+include GosuAlbacore
+
+def solution
+  @solution = Solution.new('code2slide', 'src/')
+  @solution.nunit_path = 'tools/nunit/nunit-console-x86.exe'
+  @solution.msbuild_path  = '/cygdrive/c/WINDOWS/Microsoft.NET/Framework/v4.0.30319/MSBuild.exe'
+  @solution.lib_directory = 'lib'
+  
+  @solution.add_executable_project "code2slide"
+  @solution.add_project "code2slide.core"
+  @solution.add_project "code2slide.specifications"
+
+  @solution
+end
