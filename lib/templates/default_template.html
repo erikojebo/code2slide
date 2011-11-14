@@ -20,25 +20,28 @@
           $(document).ready(function(){
             $("body").keydown(function(event){
 
-              var leftArrow = '37';
-              var upArrow = '38';
-              var rightArrow = '39';
-              var downArrow = '40';
-              var b = '66';
+              var pageUp = 33;
+              var pageDown = 34;
+              var leftArrow = 37;
+              var upArrow = 38;
+              var rightArrow = 39;
+              var downArrow = 40;
+              var b = 66;
+			  var oemPeriod = 190;
 
-              if (event.keyCode == rightArrow) {
+              if (event.keyCode == rightArrow || event.keyCode == pageDown) {
                 if ("##NEXT_FILE##" != "") {
                   window.open("##NEXT_FILE##", "_self");
                 } else if ($("#screen_cover").is(":hidden")) {
                   $("#screen_cover").show();
                 }
-              } else if (event.keyCode == leftArrow) {
+              } else if (event.keyCode == leftArrow || event.keyCode == pageUp) {
                 if ($("#screen_cover").is(":visible")) {
                   $("#screen_cover").hide();
                 } else if ("##PREVIOUS_FILE##" != "") {
                   window.open("##PREVIOUS_FILE##", "_self");
                 } 
-              } else if (event.keyCode == b) {
+              } else if (event.keyCode == b || event.keyCode == oemPeriod) {
                 $("#screen_cover").toggle();
               }
 
